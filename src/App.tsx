@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import SideList from "./SideList";
 import DesignBoard from "./DesignBoard";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const AppBox = styled.div`
   width: 100%;
@@ -16,14 +18,17 @@ const RightSide = styled.div`
 
 function App() {
   return (
-    <AppBox>
-      <LeftSide>
-        <SideList />
-      </LeftSide>
-      <RightSide>
-        <DesignBoard />
-      </RightSide>
-    </AppBox>
+    <DndProvider backend={HTML5Backend}>
+      <AppBox>
+        {" "}
+        <LeftSide>
+          <SideList />
+        </LeftSide>
+        <RightSide>
+          <DesignBoard />
+        </RightSide>
+      </AppBox>
+    </DndProvider>
   );
 }
 

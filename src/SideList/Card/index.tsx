@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-
+import { useDrag } from "react-dnd";
 interface CardProps {
   id: string;
 }
@@ -18,7 +18,16 @@ const CardBox = styled.div`
 `;
 
 const Card: React.FC<CardProps> = (props) => {
-  return <CardBox>{props.id}: Card</CardBox>;
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    // "type" is required. It is used by the "accept" specification of drop targets.
+    type: "BOX",
+    // The collect function utilizes a "monitor" instance (see the Overview for what this is)
+    // to pull important pieces of state from the DnD system.
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+  return <CardBox ref={drag}>{props.id}: Card</CardBox>;
 };
 
 export default Card;
