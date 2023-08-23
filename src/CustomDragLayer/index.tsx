@@ -66,7 +66,8 @@ export interface CustomDragLayerProps {
       item: monitor.getItem(),
       itemType: monitor.getItemType(),
       initialOffset: monitor.getInitialSourceClientOffset(),
-      currentOffset: monitor.getSourceClientOffset(),
+    //   currentOffset: monitor.getSourceClientOffset(),
+      currentOffset: monitor.getClientOffset(),
       isDragging: monitor.isDragging(),
     }));
 

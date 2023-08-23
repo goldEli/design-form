@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useDrag, useDrop } from "react-dnd";
 import { DRAG_TYPE } from "../../constant";
+import { getEmptyImage } from "react-dnd-html5-backend";
 
 interface CardProps {
   id: string;
@@ -9,13 +10,14 @@ interface CardProps {
 
 // 带阴影的卡片
 // 卡片组件
-const CardBox = styled.div`
+const CardBox = styled.div<{isDragging: boolean}>`
   box-sizing: border-box;
   height: 50px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px #ccc;
   display: flex;
+  opacity: ${props => props.isDragging ? 0.5 : 1};
 `;
 
 const BlueLine = styled.div`
@@ -51,17 +53,18 @@ const Card: React.FC<CardProps> = (props) => {
     drop(item, monitor) {
       console.log("drop", item, monitor, props.id);
     },
-    hover(item, monitor) {
-      // console.log("hover", item, monitor);
-    },
+   
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
 
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
   return (
     <>
-      <CardBox ref={drag}>
+      <CardBox isDragging={isDragging} ref={drag}>
         <DropBox ref={drop}>{props.id}: Card</DropBox>
       </CardBox>
       {isOver && <BlueLine />}
