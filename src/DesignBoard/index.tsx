@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Card from "./Card";
+import { useDrop } from "react-dnd";
+import { DRAG_TYPE } from "../constant";
 
 interface DesignBoardProps {}
 
@@ -15,6 +17,7 @@ const DesignBoardBox = styled.div`
 `;
 
 const DesignBoard: React.FC<DesignBoardProps> = () => {
+ 
   return (
     <DesignBoardBox>
       {Array(2)

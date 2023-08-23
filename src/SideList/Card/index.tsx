@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { useDrag } from "react-dnd";
+import { useDrag, useDragLayer } from "react-dnd";
+import { DRAG_TYPE } from "../../constant";
+import { getEmptyImage } from "react-dnd-html5-backend";
 interface CardProps {
   id: string;
 }
@@ -17,16 +19,29 @@ const CardBox = styled.div`
   display: flex;
 `;
 
+
+function DragLayerComponent(props: any) {
+  const collectedProps = useDragLayer((monitor) => monitor.isDragging);
+  return <div>...</div>;
+}
+
 const Card: React.FC<CardProps> = (props) => {
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     // "type" is required. It is used by the "accept" specification of drop targets.
-    type: "BOX",
+    type: DRAG_TYPE,
+    item:{
+      id: props.id,
+      sourceType: "side"
+    },
     // The collect function utilizes a "monitor" instance (see the Overview for what this is)
     // to pull important pieces of state from the DnD system.
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
   return <CardBox ref={drag}>{props.id}: Card</CardBox>;
 };
 

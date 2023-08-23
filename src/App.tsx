@@ -3,6 +3,7 @@ import SideList from "./SideList";
 import DesignBoard from "./DesignBoard";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import CustomDragLayer from "./CustomDragLayer";
 
 const AppBox = styled.div`
   width: 100%;
@@ -28,6 +29,7 @@ function App() {
           <DesignBoard />
         </RightSide>
       </AppBox>
+      <CustomDragLayer />
     </DndProvider>
   );
 }
